@@ -18,7 +18,7 @@
     - "docker rmi simple-devops-image:latest"
     ignore_errors: yes
   - name: building docker image
-    command: "docker build -t simple-devops-image ." 
+    command: "docker build --no-cache -t simple-devops-image ." 
     args:
       chdir: /home/duvva/DeclarativeCI-CD
     environment:
