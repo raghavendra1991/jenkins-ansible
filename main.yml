@@ -1,0 +1,39 @@
+---
+- hosts: node
+  remote_user: duvva
+  connection: ssh
+  gather_facts: yes
+ 
+  tasks:
+  - name: stop & delete container
+    command: "{{ item }}"
+    with_items: 
+    - "docker stop simple-devops-container"
+    - "docker rm simple-devops-container"
+    ignore_errors: yes
+  - name: delete docker image
+    command: "{{ item }}"
+    with_items:
+    - "docker rmi duvvaraghavendra/simple-devops-image:latest"
+    - "docker rmi simple-devops-image:latest"
+    ignore_errors: yes
+  - name: building docker image
+    command: "docker build -t simple-devops-image ." 
+    args:
+      chdir: /home/duvva/DeclarativeCI-CD
+    environment:
+      http_proxy: http://127.0.0.1:3128/
+      https_proxy: http://127.0.0.1:3128/
+      ftp_proxy: http://127.0.0.1:3128/
+      socks_proxy: socks://127.0.0.1:3128/
+  - name: creating docker image using docker command
+    command: docker run -d --name simple-devops-container -p 8085:8080 simple-devops-image
+  - name: Log into DockerHub
+    docker_login:
+      username: duvvaraghavendra
+      password: dckr_pat_1EV_Xk-LWrUiU7HrqBrx3bNBVsE
+  - name: Tag and push to docker hub
+    docker_image:
+      name: simple-devops-image
+      repository: duvvaraghavendra/simple-devops-image
+      push: yes
