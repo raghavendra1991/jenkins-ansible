@@ -20,7 +20,7 @@
   - name: building docker image
     command: "docker build --no-cache -t simple-devops-image ." 
     args:
-      chdir: /home/duvva/DeclarativeCI-CD
+      chdir: /home/duvva/.jenkins/workspace/jenkins-ansible_main
     environment:
       http_proxy: http://127.0.0.1:3128/
       https_proxy: http://127.0.0.1:3128/
