@@ -51,6 +51,11 @@ pipeline {
 		 }'''
 	     )
 	 }
-     }	  
+     }
+    stage ('Deploy Application') {
+      steps {
+        sh 'ansible-playbook main.yml'
+      }
+    }  
   }
 }
