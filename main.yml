@@ -36,5 +36,6 @@
     docker_image:
       name: simple-devops-image
       repository: duvvaraghavendra/simple-devops-image
-      source: load
+      tag: latest
+      source: local
       push: yes
